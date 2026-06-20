@@ -1,0 +1,39 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.Python
+build/
+dist/
+
+# ===== Virtual environment =====
+venv/
+.venv/
+env/
+
+# ===== Environment & credentials (JANGAN PERNAH commit ini) =====
+.env
+.streamlit/secrets.toml
+config.yaml
+
+# ===== Streamlit =====
+.streamlit/
+
+# ===== Database lokal (jika ada export/dump sementara) =====
+*.sql.bak
+*.db
+*.sqlite3
+
+# ===== IDE =====
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+
+# ===== Output sementara =====
+*.log
+output/
