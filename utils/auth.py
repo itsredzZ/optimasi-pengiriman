@@ -104,14 +104,8 @@ def require_admin() -> None:
 # UI komponen
 # -----------------------------------------------------------------------
 def render_user_info(sidebar: bool = True) -> None:
-    """
-    Tampilkan nama user yang login + tombol Logout.
-    Biasanya dipanggil di sidebar setiap halaman.
-    """
+    """Hanya tampilkan info user — logout ditangani di app.py."""
     target = st.sidebar if sidebar else st
     user = get_current_user()
     if user:
         target.markdown(f"👤 **{user['username']}** `{user['role']}`")
-        if target.button("Logout", key="btn_logout", use_container_width=True):
-            logout()
-            st.switch_page("pages/0_Login.py")

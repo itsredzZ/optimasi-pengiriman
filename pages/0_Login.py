@@ -16,7 +16,7 @@ st.set_page_config(
 
 # Kalau sudah login, langsung ke Dashboard
 if is_authenticated():
-    st.switch_page("app.py")
+    st.rerun()
 
 # -----------------------------------------------------------------------
 # UI
@@ -44,7 +44,7 @@ with col_m:
                 st.session_state["authenticated"] = True
                 st.session_state["user"] = user
                 st.success(f"Selamat datang, {user['username']}!")
-                st.switch_page("app.py")
+                st.rerun()
             else:
                 st.error("Username atau password salah.")
 

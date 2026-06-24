@@ -1,9 +1,11 @@
 # pages/8_Settings.py — admin only
 import streamlit as st
-from utils.auth import require_admin, render_user_info
 
-require_admin()   # auto-stop jika bukan admin
-render_user_info(sidebar=True)
+from utils.auth import get_current_user
+user = get_current_user()
+if not user or user.get("role") != "admin":
+    st.error("⛔ Halaman ini hanya dapat diakses oleh admin.")
+    st.stop()
 
 st.title("⚙️ Pengaturan Sistem")
 

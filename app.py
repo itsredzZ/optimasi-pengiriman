@@ -1,37 +1,36 @@
-"""
-app.py
-=======
-Entry point aplikasi XKargo. Untuk sekarang baru kerangka dasar untuk
-memastikan environment + koneksi database sudah jalan. Halaman Login,
-Dashboard, dsb akan dibangun di atas kerangka ini oleh masing-masing PIC.
-"""
-
 import streamlit as st
+from utils.auth import is_authenticated, get_current_user, logout
 
-from db.database import test_connection
+st.set_page_config(page_title="XKargo", page_icon="🚚", layout="wide")
 
-st.set_page_config(
-    page_title="XKargo",
-    page_icon="\U0001F69A",
-    layout="wide",
-)
+# Handle logout SEBELUM halaman apapun dirender
+if st.session_state.get("do_logout"):
+    logout()
+    del st.session_state["do_logout"]
+    st.rerun()
 
-st.title("XKargo \u2014 Sistem Optimasi Distribusi Barang Multi-Depot")
-st.caption("Versi awal kerangka proyek. Halaman Login & Dashboard menyusul.")
-
-st.divider()
-
-st.subheader("Status Setup")
-
-if test_connection():
-    st.success("Koneksi ke database MySQL (XAMPP) berhasil.")
-else:
-    st.error(
-        "Belum bisa konek ke database. Pastikan XAMPP (Apache + MySQL) "
-        "sudah running, schema.sql sudah di-import, dan file .env sudah dibuat."
+if not is_authenticated():
+    pg = st.navigation(
+        [st.Page("pages/0_Login.py", title="Login", icon="🔐")],
+        position="hidden",
     )
+else:
+    user = get_current_user()
+    st.sidebar.markdown(f"👤 **{user['username']}** `{user['role']}`")
+    if st.sidebar.button("Logout", use_container_width=True):
+        st.session_state["do_logout"] = True
+        st.rerun()
 
-st.info(
-    "Navigasi ke halaman lain melalui sidebar di kiri "
-    "(folder `pages/` akan terisi seiring pengembangan fitur)."
-)
+    pg = st.navigation([
+        st.Page("app_dashboard.py",            title="Dashboard",        icon="📊"),
+        st.Page("pages/1_Master_Data_Kota.py", title="Master Data Kota", icon="🏙️"),
+        st.Page("pages/2_Master_Data_Truk.py", title="Master Data Truk", icon="🚛"),
+        st.Page("pages/3_Database_Barang.py",  title="Database Barang",  icon="📦"),
+        st.Page("pages/4_Depot.py",            title="Depot",            icon="🏭"),
+        st.Page("pages/5_Input_Pengiriman.py", title="Input Pengiriman", icon="📝"),
+        st.Page("pages/6_Optimasi_Hasil.py",   title="Optimasi Hasil",   icon="⚙️"),
+        st.Page("pages/7_Riwayat_Laporan.py",  title="Riwayat Laporan",  icon="📋"),
+        st.Page("pages/8_Settings.py",         title="Settings",         icon="🔧"),
+    ])
+
+pg.run()

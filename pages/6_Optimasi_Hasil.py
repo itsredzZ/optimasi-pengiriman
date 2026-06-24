@@ -16,10 +16,15 @@ import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
-from utils.auth import require_login, render_user_info
 
-require_login()
-render_user_info(sidebar=True)
+def render_user_info(sidebar: bool = True) -> None:
+    target = st.sidebar if sidebar else st
+    user = get_current_user()
+    if user:
+        target.markdown(f"👤 **{user['username']}** `{user['role']}`")
+        if target.button("Logout", key="btn_logout", use_container_width=True):
+            logout()
+            st.rerun() 
 
 st.title("⚙️ Optimasi & Hasil")
 
