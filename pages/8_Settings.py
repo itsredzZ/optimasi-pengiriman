@@ -23,21 +23,23 @@ except Exception:
 st.subheader("🧠 Parameter PSO")
 with st.form("form_pso"):
     c1, c2 = st.columns(2)
-    n_particles  = c1.number_input("Jumlah Partikel",    value=int(db_vals.get("pso/n_particles", 30)),   min_value=5)
-    max_iter     = c2.number_input("Maks Iterasi",        value=int(db_vals.get("pso/max_iter", 100)),    min_value=10)
+    n_particles  = c1.number_input("Jumlah Partikel",    value=int(db_vals.get("pso/n_partikel", 30)),   min_value=5)
+    max_iter     = c2.number_input("Maks Iterasi",        value=int(db_vals.get("pso/n_iterasi", 100)),    min_value=10)
     w_max        = c1.number_input("W_MAX (Inersia Max)", value=float(db_vals.get("pso/w_max", 0.9)),     step=0.05, format="%.2f")
     w_min        = c2.number_input("W_MIN (Inersia Min)", value=float(db_vals.get("pso/w_min", 0.4)),     step=0.05, format="%.2f")
     c1_val       = c1.number_input("C1 (Kognitif)",       value=float(db_vals.get("pso/c1", 1.5)),        step=0.1,  format="%.1f")
     c2_val       = c2.number_input("C2 (Sosial)",         value=float(db_vals.get("pso/c2", 1.5)),        step=0.1,  format="%.1f")
-    early_stop   = c1.number_input("Early Stop Threshold",value=int(db_vals.get("pso/early_stop", 20)),   min_value=1)
+    early_stop   = c1.number_input("Early Stop Threshold",value=int(db_vals.get("pso/early_stop_iter", 20)),   min_value=1)
     base_seed    = c2.number_input("Base Seed",            value=int(db_vals.get("pso/base_seed", 42)))
 
     if st.form_submit_button("💾 Simpan Parameter PSO", type="primary"):
         _save_settings("pso", {
-            "n_particles": n_particles, "max_iter": max_iter,
+            "n_partikel":      n_particles,
+            "n_iterasi":       max_iter,
+            "early_stop_iter": early_stop,
             "w_max": w_max, "w_min": w_min,
             "c1": c1_val, "c2": c2_val,
-            "early_stop": early_stop, "base_seed": base_seed,
+            "base_seed": base_seed,
         })
         st.success("Parameter PSO berhasil disimpan.")
 
