@@ -3,15 +3,6 @@ import streamlit as st
 import pandas as pd
 from datetime import date, timedelta
 
-def render_user_info(sidebar: bool = True) -> None:
-    target = st.sidebar if sidebar else st
-    user = get_current_user()
-    if user:
-        target.markdown(f"👤 **{user['username']}** `{user['role']}`")
-        if target.button("Logout", key="btn_logout", use_container_width=True):
-            logout()
-            st.rerun() 
-
 st.title("📋 Riwayat & Laporan")
 
 # ── Filter tanggal ──────────────────────────────────────────────────────────

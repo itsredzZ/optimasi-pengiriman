@@ -13,7 +13,7 @@ CREATE DATABASE IF NOT EXISTS xkargo_db
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_general_ci;
 
-USE xkargo_db;
+USE db_xkargo;
 
 -- Hapus tabel lama jika re-run (urutan dibalik dari FK dependency)
 DROP TABLE IF EXISTS relocation_logs;
