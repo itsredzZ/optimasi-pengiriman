@@ -21,7 +21,7 @@ if is_authenticated():
 # -----------------------------------------------------------------------
 # UI
 # -----------------------------------------------------------------------
-st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("", unsafe_allow_html=True)
 
 col_l, col_m, col_r = st.columns([1, 2, 1])
 with col_m:
